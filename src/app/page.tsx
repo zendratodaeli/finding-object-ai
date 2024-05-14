@@ -20,7 +20,7 @@ export default function Home() {
           height={100}
         />
         <span className=" font-extrabold tracking-tight text-4xl lg:text-5xl">
-          FO - AI
+          FN - AI
         </span>
       </div>
       <p className=" text-center">
@@ -28,7 +28,7 @@ export default function Home() {
       </p>
 
       <Button size={"lg"} asChild>
-        <Link href="/notes">Open</Link>
+        <Link href="/sign-in">Open</Link>
       </Button>
     </main>
   );
