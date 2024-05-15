@@ -28,7 +28,7 @@ export default function Home() {
       </p>
 
       <Button size={"lg"} asChild>
-        <Link href="/sign-in">Open</Link>
+        <Link href="/notes">Open</Link>
       </Button>
     </main>
   );

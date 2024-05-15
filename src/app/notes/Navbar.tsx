@@ -1,6 +1,6 @@
 "use client"
 
-import AddNoteDialog from "@/components/AddNoteDialog"
+import AddEditNoteDialog from "@/components/AddEditNoteDialog"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
@@ -10,7 +10,7 @@ import Link from "next/link"
 import { useState } from "react"
 
 const Navbar = () => {
-  const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
+  const [showAddEditNoteDialog, setShowAddEditNoteDialog] = useState(false);
 
   return (
     <>
@@ -27,7 +27,7 @@ const Navbar = () => {
           </Link>
           <div className=" flex items-center gap-2">
             <ThemeToggle/>
-            <Button onClick={() => setShowAddNoteDialog(true)}>
+            <Button onClick={() => setShowAddEditNoteDialog(true)}>
               <Plus size={20} className="mr-2"/>
               Add Note
             </Button>
@@ -40,7 +40,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <AddNoteDialog open={showAddNoteDialog} setOpen={setShowAddNoteDialog} />
+      <AddEditNoteDialog open={showAddEditNoteDialog} setOpen={setShowAddEditNoteDialog} />
     </>
   )
 }
