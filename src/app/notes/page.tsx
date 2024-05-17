@@ -1,8 +1,8 @@
 import Note from '@/components/Note';
-import prismadb from '@/lib/db/prismadb';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import React from 'react'
+import prisma from '@/lib/db/prisma';
 
 const NotesPage = async () => {
   const { userId } = auth();
@@ -10,7 +10,7 @@ const NotesPage = async () => {
   if(!userId) redirect("/sign-in")
   
 
-  const allNotes = await prismadb.note.findMany({
+  const allNotes = await prisma.note.findMany({
     where: {userId}
   });
 

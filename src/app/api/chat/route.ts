@@ -1,5 +1,5 @@
 import { notesIndex } from "@/lib/db/pinecone";
-import prismadb from "@/lib/db/prismadb";
+import prisma from '@/lib/db/prisma';
 import openai, { getEmbedding } from "@/lib/openai";
 import { auth } from "@clerk/nextjs/server";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       filter: {userId}
     });
 
-    const relevantNotes = await prismadb.note.findMany({
+    const relevantNotes = await prisma.note.findMany({
       where: {
         id: {
           in: vectorQueryResponse.matches.map((match) => match.id)

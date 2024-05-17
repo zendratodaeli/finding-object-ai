@@ -1,8 +1,8 @@
 import { notesIndex } from "@/lib/db/pinecone";
-import prismadb from "@/lib/db/prismadb";
 import { getEmbedding } from "@/lib/openai";
 import { createNoteSchema, deleteNoteSchema, updatedNoteSchema } from "@/lib/validation/note";
 import { auth } from "@clerk/nextjs/server";
+import prisma from '@/lib/db/prisma';
 
 export async function POST(req: Request) {
   try {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     const embedding = await getEmbeddingForNote(title, content);
 
-    const note = await prismadb.$transaction(async (tx) => {
+    const note = await prisma.$transaction(async (tx) => {
       const note = await tx.note.create({
         data: {
           title, content, userId
@@ -65,7 +65,7 @@ export async function PUT(req: Request) {
 
     const {userId} = auth();
 
-    const note = await prismadb.note.findUnique({
+    const note = await prisma.note.findUnique({
       where: { id }
     });
 
@@ -79,7 +79,7 @@ export async function PUT(req: Request) {
 
     const embedding = await getEmbeddingForNote(title, content);
 
-    const updatedNote = await prismadb.$transaction(async (tx) => {
+    const updatedNote = await prisma.$transaction(async (tx) => {
       const updatedNote = await tx.note.update({
         where: { id },
         data: {
@@ -122,7 +122,7 @@ export async function DELETE(req: Request) {
 
     const {userId} = auth();
 
-    const note = await prismadb.note.findUnique({
+    const note = await prisma.note.findUnique({
       where: { id }
     });
 
@@ -134,7 +134,7 @@ export async function DELETE(req: Request) {
       return Response.json({error: "Unauthorized"}, { status: 401})
     }
 
-    await prismadb.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx) => {
       await tx.note.delete({where: {id}});
       await notesIndex.deleteOne(id)
     })
