@@ -1,5 +1,6 @@
 "use client"
 
+import AIChatButton from "@/components/AIChatButton"
 import AddEditNoteDialog from "@/components/AddEditNoteDialog"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
@@ -7,10 +8,19 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import { Plus } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const Navbar = () => {
   const [showAddEditNoteDialog, setShowAddEditNoteDialog] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true)
+  }, []);
+
+  if(!mounted) {
+    return null;
+  }
 
   return (
     <>
@@ -31,6 +41,7 @@ const Navbar = () => {
               <Plus size={20} className="mr-2"/>
               Add Note
             </Button>
+            <AIChatButton/>
             <SignedOut>
               <SignInButton />
             </SignedOut>
